@@ -119,8 +119,6 @@ public class MainStart {
 		// 如果一级缓存没有拿到  是不是就说明当前是循环依赖创建
 		if (bean == null && singletonsCurrentlyInCreation.contains(beanName)) {
 			// 调用bean的后置处理器创建动态代理
-
-
 			bean = earlySingletonObjects.get(beanName);
 			if (bean == null) {
 				ObjectFactory factory = factoryEarlySingletonObjects.get(beanName);
