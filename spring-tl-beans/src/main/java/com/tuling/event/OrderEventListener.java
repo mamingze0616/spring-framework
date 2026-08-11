@@ -10,18 +10,19 @@ import org.springframework.stereotype.Component;
 /***
  * @Author 徐庶   QQ:1092002729
  * @Slogan 致敬大师，致敬未来的你
+ *
+ * 监听器
  */
-//@Component
-public class ContextRefreshedEventListener{ //implements ApplicationListener<ContextRefreshedEvent> {
+@Component
+@Lazy
+public class OrderEventListener {//}  implements ApplicationListener<OrderEvent> {
 
-    //@Async
-    @EventListener(ContextRefreshedEvent.class)
-    public void onApplicationEvent(ContextRefreshedEvent event)  {
-        if(event.getApplicationContext().getParent() == null)//root application context 没有parent，他就是老大.
-        {
-            System.out.println("______________\n容器加载完毕\n———————");
+    // 基于注解的
+    @EventListener(OrderEvent.class)
+    public void onApplicationEvent(OrderEvent event) {
+        if(event.getName().equals("减库存")){
+            System.out.println("减库存.......");
         }
-
     }
 
 }

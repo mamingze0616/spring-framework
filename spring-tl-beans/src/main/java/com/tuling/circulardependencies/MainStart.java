@@ -24,7 +24,7 @@ public class MainStart {
 
 		//ApplicationContext 已经加载spring容器
 
-		InstanceA a = (InstanceA) getBean(beanName);
+		IApi a = (IApi) getBean(beanName);
 
 		a.say();
 	}
@@ -72,7 +72,7 @@ public class MainStart {
 
 		ObjectFactory factory = () -> {
 			JdkProxyBeanPostProcessor beanPostProcessor = new JdkProxyBeanPostProcessor();
-			return beanPostProcessor.getEarlyBeanReference(bean, beanName);
+			return beanPostProcessor.getEarlyBeanReference(beanInstanc, beanName);
 		};
 		factoryEarlySingletonObjects.put(beanName, factory);
 		//  只是循环依赖才创建动态代理？   //创建动态代理
@@ -100,18 +100,30 @@ public class MainStart {
 				Class<?> type = declaredField.getType();
 
 				//com.tuling.circulardependencies.InstanceB
-				getBean(type.getName());
+				Object fieldBean = getBean(type.getName());
+				// 反射设置属性值
+				declaredField.setAccessible(true);
+				declaredField.set(beanInstanc, fieldBean);
 			}
 
 		}
 
 
 		// 3.初始化 (省略）
-		// 创建动态代理
+
+		// 如果发生了循环依赖，二级缓存中会存放通过工厂创建的代理对象
+		// 最终存入一级缓存的必须是同一个代理对象，保证容器中实例一致
+		Object finalBean = earlySingletonObjects.get(beanName);
+		if (finalBean == null) {
+			// 没有发生循环依赖，没有提前创建代理，直接使用原始对象
+			finalBean = beanInstanc;
+		}
+		factoryEarlySingletonObjects.remove(beanName);
+		earlySingletonObjects.remove(beanName);
 
 		// 存入到一级缓存
-		singletonObjects.put(beanName, beanInstanc);
-		return beanInstanc;
+		singletonObjects.put(beanName, finalBean);
+		return finalBean;
 	}
 
 	private static Object getSingleton(String beanName) {
@@ -122,8 +134,12 @@ public class MainStart {
 			bean = earlySingletonObjects.get(beanName);
 			if (bean == null) {
 				ObjectFactory factory = factoryEarlySingletonObjects.get(beanName);
-				factory.getObject();
-
+				if (factory != null) {
+					// 调用工厂创建代理对象，存入二级缓存，移除三级缓存
+					bean = factory.getObject();
+					earlySingletonObjects.put(beanName, bean);
+					factoryEarlySingletonObjects.remove(beanName);
+				}
 			}
 
 		}
