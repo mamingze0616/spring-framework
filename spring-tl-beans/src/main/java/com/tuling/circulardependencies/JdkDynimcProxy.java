@@ -15,6 +15,7 @@ public class JdkDynimcProxy implements InvocationHandler {
 		this.target = target;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T getProxy() {
 		return (T) Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
 	}

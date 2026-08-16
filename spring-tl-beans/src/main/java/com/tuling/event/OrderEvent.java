@@ -7,7 +7,9 @@ import org.springframework.context.ApplicationEvent;
  * @Slogan 致敬大师，致敬未来的你
  * 事件
  */
-public class OrderEvent  extends ApplicationEvent {
+public class OrderEvent extends ApplicationEvent {
+
+    private static final long serialVersionUID = 1L;
 
     private String name;
 

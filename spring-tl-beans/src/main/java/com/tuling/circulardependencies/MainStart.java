@@ -38,7 +38,7 @@ public class MainStart {
 	private static Map<String, Object> earlySingletonObjects = new ConcurrentHashMap<>(256);
 
 	// 三级缓存
-	private static Map<String, ObjectFactory> factoryEarlySingletonObjects = new ConcurrentHashMap<>(256);
+	private static Map<String, ObjectFactory<?>> factoryEarlySingletonObjects = new ConcurrentHashMap<>(256);
 
 
 	// 标识当前是不是循环依赖   如果正在创建并且从一级缓存中没有拿到是不是说明是依赖
@@ -70,7 +70,7 @@ public class MainStart {
 		// 1.实例化
 		Object beanInstanc = beanClass.newInstance();
 
-		ObjectFactory factory = () -> {
+		ObjectFactory<Object> factory = () -> {
 			JdkProxyBeanPostProcessor beanPostProcessor = new JdkProxyBeanPostProcessor();
 			return beanPostProcessor.getEarlyBeanReference(beanInstanc, beanName);
 		};
@@ -133,7 +133,7 @@ public class MainStart {
 			// 调用bean的后置处理器创建动态代理
 			bean = earlySingletonObjects.get(beanName);
 			if (bean == null) {
-				ObjectFactory factory = factoryEarlySingletonObjects.get(beanName);
+				ObjectFactory<?> factory = factoryEarlySingletonObjects.get(beanName);
 				if (factory != null) {
 					// 调用工厂创建代理对象，存入二级缓存，移除三级缓存
 					bean = factory.getObject();
