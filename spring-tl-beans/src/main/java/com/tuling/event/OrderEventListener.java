@@ -15,10 +15,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Lazy
-public class OrderEventListener {//}  implements ApplicationListener<OrderEvent> {
+public class OrderEventListener   implements ApplicationListener<OrderEvent> {
 
     // 基于注解的
-    @EventListener(OrderEvent.class)
+//    @EventListener(OrderEvent.class)
+	@Override
     public void onApplicationEvent(OrderEvent event) {
         if(event.getName().equals("减库存")){
             System.out.println("减库存.......");
