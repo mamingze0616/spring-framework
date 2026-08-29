@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":spring-core"))
     implementation(project(":spring-context"))
     implementation(project(":spring-aop"))
+    implementation("org.aspectj:aspectjweaver")
 }
 
 test {
