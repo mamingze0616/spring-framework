@@ -1,11 +1,10 @@
 package com.tuling.EalyAopDemo.chainDemo;
 
 import com.tuling.EalyAopDemo.TulingLogAdvice;
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
-import com.tuling.EalyAopDemo.TulingLogAdvice;
 import com.tuling.EalyAopDemo.TulingLogInterceptor;
 import com.tuling.TulingCalculate;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
@@ -18,62 +17,64 @@ import java.util.List;
  */
 public class MainStart {
 
-    public static void main(String[] args) throws Throwable {
-        // 把一条链上的都初始化
-        List<MethodInterceptor> list=new ArrayList<>();
-        list.add(new MethodBeforeAdviceInterceptor(new TulingLogAdvice()));
-        list.add(new TulingLogInterceptor());
+	public static void main(String[] args) throws Throwable {
+		// 把一条链上的都初始化
+		List<MethodInterceptor> list = new ArrayList<>();
+		list.add(new MethodBeforeAdviceInterceptor(new TulingLogAdvice()));
+		list.add(new TulingLogInterceptor());
 
-        // 递归依次调用
-        MyMethodInvocation invocation=new MyMethodInvocation(list);
-        invocation.proceed();
-    }
+		// 递归依次调用
+		MyMethodInvocation invocation = new MyMethodInvocation(list);
+		invocation.proceed();
+	}
 
-    public static class MyMethodInvocation implements MethodInvocation{
-        protected List<MethodInterceptor> list;
-        protected final TulingCalculate target;
+	public static class MyMethodInvocation implements MethodInvocation {
+		protected List<MethodInterceptor> list;
+		protected final TulingCalculate target;
 
-        public MyMethodInvocation(List<MethodInterceptor> list) {
-            this.list = list;
-            this.target = new TulingCalculate();
-        }
-        int i=0;
-        @Override
-        public Object proceed() throws Throwable {
-            if(i==list.size()){
-                return target.add(2,2);
-            }
-            MethodInterceptor mi = list.get(i);
-            i++;
-           return  mi.invoke(this);
-        }
+		public MyMethodInvocation(List<MethodInterceptor> list) {
+			this.list = list;
+			this.target = new TulingCalculate();
+		}
 
-        @Override
-        public Object getThis() {
-            return target;
-        }
+		int i = 0;
 
-        @Override
-        public AccessibleObject getStaticPart() {
-            return null;
-        }
+		@Override
+		public Object proceed() throws Throwable {
+			if (i == list.size()) {
+				return target.add(2, 2);
+			}
+			MethodInterceptor mi = list.get(i);
+			i++;
+			return mi.invoke(this);
+		}
+
+		@Override
+		public Object getThis() {
+			return target;
+		}
+
+		@Override
+		public AccessibleObject getStaticPart() {
+			return null;
+		}
 
 
-        @Override
-        public Method getMethod() {
-            try {
+		@Override
+		public Method getMethod() {
+			try {
 
-                return target.getClass().getMethod("add",int.class,int.class);
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
+				return target.getClass().getMethod("add", int.class, int.class);
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 
-        @Override
-        public Object[] getArguments() {
-            return new Object[0];
-        }
-    }
+		@Override
+		public Object[] getArguments() {
+			return new Object[0];
+		}
+	}
 
 }

@@ -49,13 +49,14 @@ public class EalyAopMainConfig {
      * 而且，我们看到，我们的拦截器的粒度只控制到了类级别，类中所有的方法都进行了拦截。
      * 接下来，我们看看怎么样只拦截特定的方法。
      * @return
+	 **/
     @Bean
      public ProxyFactoryBean calculateProxy(){
          ProxyFactoryBean userService=new ProxyFactoryBean();
          userService.setInterceptorNames("tulingLogAdvice","tulingLogInterceptor");  // 根据指定的顺序执行
          userService.setTarget(tulingCalculate());
          return userService;
-     }*/
+     }
 
 
     /**
@@ -65,15 +66,15 @@ public class EalyAopMainConfig {
      * DefaultBeanFactoryPointcutAdvisor xml解析的Advisor   <aop:before
      * InstantiationModelAwarePointcutAdvisorImpl  注解解析的advisor(@Before @After....)
      * @return* */
-    @Bean
-    public NameMatchMethodPointcutAdvisor tulingLogAspectAdvisor() {
-        NameMatchMethodPointcutAdvisor advisor=new NameMatchMethodPointcutAdvisor();
-        // 通知(Advice)  ：是我们的通知类 没有带切点
-        // 通知者(Advisor)：是经过包装后的细粒度控制方式。 带了切点
-        advisor.setAdvice(tulingLogAdvice());
-        advisor.setMappedNames("div");
-        return  advisor;
-    }
+//    @Bean
+//    public NameMatchMethodPointcutAdvisor tulingLogAspectAdvisor() {
+//        NameMatchMethodPointcutAdvisor advisor=new NameMatchMethodPointcutAdvisor();
+//        // 通知(Advice)  ：是我们的通知类 没有带切点
+//        // 通知者(Advisor)：是经过包装后的细粒度控制方式。 带了切点
+//        advisor.setAdvice(tulingLogAdvice());
+//        advisor.setMappedNames("div");
+//        return  advisor;
+//    }
 
 
 
@@ -109,16 +110,16 @@ public class EalyAopMainConfig {
     /**
      *     autoProxy: BeanPostProcessor手动指定Advice方式  BeanNameAutoProxyCreator
      * @return */
-     @Bean
-     public BeanNameAutoProxyCreator autoProxyCreator() {
-     BeanNameAutoProxyCreator beanNameAutoProxyCreator = new BeanNameAutoProxyCreator();
-     //设置要创建代理的那些Bean的名字
-     beanNameAutoProxyCreator.setBeanNames("tuling*");
-     //设置拦截链名字(这些拦截器是有先后顺序的)
-     beanNameAutoProxyCreator.setInterceptorNames("tulingLogAspectAdvisor");
-     return beanNameAutoProxyCreator;
-     }
-
+//     @Bean
+//     public BeanNameAutoProxyCreator autoProxyCreator() {
+//     BeanNameAutoProxyCreator beanNameAutoProxyCreator = new BeanNameAutoProxyCreator();
+//     //设置要创建代理的那些Bean的名字
+//     beanNameAutoProxyCreator.setBeanNames("tuling*");
+//     //设置拦截链名字(这些拦截器是有先后顺序的)
+//     beanNameAutoProxyCreator.setInterceptorNames("tulingLogAspectAdvisor");
+//     return beanNameAutoProxyCreator;
+//     }
+//
 
     /**
      * BeanPostProcessor自动扫描Advisor方式  DefaultAdvisorAutoProxyCreator
