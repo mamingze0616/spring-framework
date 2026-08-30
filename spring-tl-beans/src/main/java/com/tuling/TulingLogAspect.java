@@ -2,7 +2,6 @@ package com.tuling;
 
 import com.tuling.Introductions.ProgramCalculate;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

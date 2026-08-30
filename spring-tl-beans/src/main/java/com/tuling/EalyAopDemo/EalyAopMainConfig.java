@@ -3,6 +3,7 @@ package com.tuling.EalyAopDemo;
 import com.tuling.Calculate;
 import com.tuling.TulingCalculate;
 import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
 import org.springframework.context.annotation.Bean;
 
@@ -93,29 +94,29 @@ public class EalyAopMainConfig {
 	 * 如果多个Bean需要创建多个ProxyFactoryBean 。
 	 *
 	 * @return
-	 **/
-	@Bean
-	public ProxyFactoryBean calculateProxy() {
-		ProxyFactoryBean userService = new ProxyFactoryBean();
-		userService.setInterceptorNames("tulingLogAspectAdvisor");
-		userService.setTarget(tulingCalculate());
-		return userService;
-	}
+	 * */
+//	@Bean
+//	public ProxyFactoryBean calculateProxy() {
+//		ProxyFactoryBean userService = new ProxyFactoryBean();
+//		userService.setInterceptorNames("tulingLogAspectAdvisor");
+//		userService.setTarget(tulingCalculate());
+//		return userService;
+//	}
 
 
 	/**
 	 *     autoProxy: BeanPostProcessor手动指定Advice方式  BeanNameAutoProxyCreator
 	 * @return */
-//     @Bean
-//     public BeanNameAutoProxyCreator autoProxyCreator() {
-//     BeanNameAutoProxyCreator beanNameAutoProxyCreator = new BeanNameAutoProxyCreator();
-//     //设置要创建代理的那些Bean的名字
-//     beanNameAutoProxyCreator.setBeanNames("tuling*");
-//     //设置拦截链名字(这些拦截器是有先后顺序的)
-//     beanNameAutoProxyCreator.setInterceptorNames("tulingLogAspectAdvisor");
-//     return beanNameAutoProxyCreator;
-//     }
-//
+	@Bean
+	public BeanNameAutoProxyCreator autoProxyCreator() {
+		BeanNameAutoProxyCreator beanNameAutoProxyCreator = new BeanNameAutoProxyCreator();
+		//设置要创建代理的那些Bean的名字
+		beanNameAutoProxyCreator.setBeanNames("tuling*");
+		//设置拦截链名字(这些拦截器是有先后顺序的)
+		beanNameAutoProxyCreator.setInterceptorNames("tulingLogAspectAdvisor");
+		return beanNameAutoProxyCreator;
+	}
+
 
 	/**
 	 * BeanPostProcessor自动扫描Advisor方式  DefaultAdvisorAutoProxyCreator
