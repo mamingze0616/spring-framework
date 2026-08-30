@@ -10,17 +10,16 @@ import org.springframework.aop.MethodBeforeAdvice;
  */
 public class MethodBeforeAdviceInterceptor implements MethodInterceptor {
 
-    // 前置通知
-    MethodBeforeAdvice methodBeforeAdvice;
+	// 前置通知
+	MethodBeforeAdvice methodBeforeAdvice;
 
-    public MethodBeforeAdviceInterceptor(MethodBeforeAdvice methodBeforeAdvice) {
-        this.methodBeforeAdvice = methodBeforeAdvice;
-    }
+	public MethodBeforeAdviceInterceptor(MethodBeforeAdvice methodBeforeAdvice) {
+		this.methodBeforeAdvice = methodBeforeAdvice;
+	}
 
-    @Override
-    public Object invoke(MethodInvocation invocation) throws Throwable {
-
-          methodBeforeAdvice.before(invocation.getMethod(),invocation.getArguments(),invocation.getThis());
-        return invocation.proceed();
-    }
+	@Override
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		methodBeforeAdvice.before(invocation.getMethod(), invocation.getArguments(), invocation.getThis());
+		return invocation.proceed();
+	}
 }

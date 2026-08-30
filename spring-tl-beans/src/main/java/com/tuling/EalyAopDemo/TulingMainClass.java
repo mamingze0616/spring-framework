@@ -23,7 +23,7 @@ public class TulingMainClass {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(EalyAopMainConfig.class);
         Calculate calculateProxy = ctx.getBean("calculateProxy",Calculate.class);
         System.out.println(calculateProxy.getClass());
-        calculateProxy.div(1,1);
+        calculateProxy.add(1,1);
 
     }
 }
