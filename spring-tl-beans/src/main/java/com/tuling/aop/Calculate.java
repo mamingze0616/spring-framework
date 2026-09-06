@@ -1,4 +1,4 @@
-package com.tuling;
+package com.tuling.aop;
 
 /**
  * 计算类接口

@@ -1,4 +1,4 @@
-package com.tuling;
+package com.tuling.aop;
 
 import com.tuling.Introductions.ProgramCalculate;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

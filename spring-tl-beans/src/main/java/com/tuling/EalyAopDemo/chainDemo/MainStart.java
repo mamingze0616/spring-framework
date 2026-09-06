@@ -2,7 +2,7 @@ package com.tuling.EalyAopDemo.chainDemo;
 
 import com.tuling.EalyAopDemo.TulingLogAdvice;
 import com.tuling.EalyAopDemo.TulingLogInterceptor;
-import com.tuling.TulingCalculate;
+import com.tuling.aop.TulingCalculate;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 

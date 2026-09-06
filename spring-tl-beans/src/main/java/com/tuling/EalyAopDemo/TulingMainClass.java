@@ -1,10 +1,7 @@
 package com.tuling.EalyAopDemo;
-
-import org.springframework.aop.framework.ProxyFactoryBean;
+import com.tuling.aop.Calculate;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import com.tuling.Calculate;
-import com.tuling.MainConfig;
-import com.tuling.TulingCalculate;
+
 
 /**
  * Created by xsls on 2019/6/10.

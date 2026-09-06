@@ -1,11 +1,11 @@
-package com.tuling;
+package com.tuling.aop;
 
 import com.tuling.Introductions.ProgramCalculate;
+import com.tuling.Introductions.SimpleProgramCalculate;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import com.tuling.Introductions.SimpleProgramCalculate;
 
 import java.util.Arrays;
 
@@ -18,11 +18,11 @@ import java.util.Arrays;
 public class TulingLogAspect {
 
     /*引入:*/
-    @DeclareParents(value="com.tuling.TulingCalculate",   // 动态实现的类
+    @DeclareParents(value="com.tuling.aop.TulingCalculate",   // 动态实现的类
             defaultImpl = SimpleProgramCalculate.class)  // 引入的接口的默认实现
     public static ProgramCalculate programCalculate;    // 引入的接口
 
-    @Pointcut("execution(* com.tuling.TulingCalculate.*(..))")
+    @Pointcut("execution(* com.tuling.aop.TulingCalculate.*(..))")
     public void pointCut(){};
 
     @Before(value = "pointCut()")

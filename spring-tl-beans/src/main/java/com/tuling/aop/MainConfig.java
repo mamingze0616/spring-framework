@@ -1,4 +1,4 @@
-package com.tuling;
+package com.tuling.aop;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @EnableAspectJAutoProxy   /*<aop:aspectj-autoproxy/>*/
 //(exposeProxy = true) //(proxyTargetClass = true)
-@ComponentScan("tuling")
+@ComponentScan("com.tuling.aop")
 public class MainConfig {
 
 	@Bean
