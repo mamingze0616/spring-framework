@@ -16,7 +16,11 @@ dependencies {
     implementation(project(":spring-core"))
     implementation(project(":spring-context"))
     implementation(project(":spring-aop"))
+    implementation(project(":spring-tx"))
+    implementation(project(":spring-jdbc"))
     implementation("org.aspectj:aspectjweaver")
+    implementation("com.alibaba:druid:1.2.20")
+    runtimeOnly("mysql:mysql-connector-java:8.0.33")
 }
 
 test {
